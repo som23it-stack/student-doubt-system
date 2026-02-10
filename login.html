@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+
+    <style>
+        body{
+            margin:0;
+            font-family:Arial;
+            background:linear-gradient(135deg,#667eea,#764ba2);
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .box{
+            background:white;
+            padding:30px;
+            border-radius:8px;
+            width:300px;
+            text-align:center;
+            box-shadow:0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        input{
+            width:100%;
+            padding:10px;
+            margin:10px 0;
+            border:1px solid #ccc;
+            border-radius:5px;
+        }
+
+        button{
+            width:100%;
+            padding:10px;
+            margin-top:5px;
+            background:#667eea;
+            color:white;
+            border:none;
+            cursor:pointer;
+            border-radius:5px;
+        }
+
+        button:hover{
+            background:#5563c1;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Login / Register</h2>
+
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+    <button onclick="register()">Register</button>
+</div>
+
+<script type="module">
+import { initializeApp } from 
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBH8H7AxuMIndVHmtqzylK2zAjOo7OG08w",
+  authDomain: "studentdout.firebaseapp.com",
+  projectId: "studentdout",
+  storageBucket: "studentdout.firebasestorage.app",
+  messagingSenderId: "682842749499",
+  appId: "1:682842749499:web:8deb5d974751f97a43ba1e",
+  measurementId: "G-CD3NMWKQ9X"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.register = function() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+    .then(() => alert("Registered Successfully"))
+    .catch(err => alert(err.message));
+}
+
+window.login = function() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+        if(email === "admin@gmail.com"){
+            window.location = "admin.html";
+        } else {
+            window.location = "student.html";
+        }
+    })
+    .catch(err => alert(err.message));
+}
+</script>
+
+</body>
+</html>
